@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+An dog app powered by React
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -67,7 +67,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-=======
-# dog-api
-An dog app powered by React
->>>>>>> 32a6b18cb33f4eee485d05b3007126ed2c33055a
