@@ -1,10 +1,10 @@
 import React from "react";
 
-import BreedsList from '../components/breedsList';
+import BreedsList from './BreedsList';
 
 const App = () => {
   return (
-    <div>
+    <div className="ui container">
       <BreedsList/>
     </div>
   );
