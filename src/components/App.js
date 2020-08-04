@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 
-import BreedsList from './BreedsList';
+import BreedsList from "./BreedsList";
 
 const App = () => {
-  return (
-    <div className="ui container">
-      <BreedsList/>
-    </div>
-  );
+    const [search, setSearch] = useState("");
+
+    return (
+        <div className='ui container'>
+            <div className='ui visible sidebar'>
+                <div className='ui input focus'>
+                    <input
+                        type='text'
+                        placeholder='Search...'
+                        value={search}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            // console.log(e.target.value);
+                        }}
+                    />
+                </div>
+                <BreedsList />
+            </div>
+        </div>
+    );
 };
 
 export default App;

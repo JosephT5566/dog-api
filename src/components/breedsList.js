@@ -10,20 +10,14 @@ const BreedsList = () => {
             const breedsList = await breedsListRequest();
             setBreeds(Object.keys(breedsList.data.message));
             // console.log(Object.keys(breedsList.data.message))
-        };
+        }
         renderBreedsList();
     }, []);
 
     return (
-      <div className='ui visible sidebar'>
-          {breeds.map((breed) => {
-              return(
-                  <div key={breed}>
-                      {breed}
-                  </div>
-              )
-          })}
-      </div>  
+        breeds.map((breed) => {
+            return <div key={breed}>{breed}</div>;
+        })
     );
 };
 
