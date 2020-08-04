@@ -1,7 +1,11 @@
 import axios from 'axios';
 
-export const breedsListRequest = axios.create({
-    baseURL: 'https://dog.ceo/api/breeds/list/all',
+export const breedsRequest = axios.create({
+    baseURL: 'https://dog.ceo/api/breeds/',
+});
+
+export const breedRequest = axios.create({
+    baseURL: 'https://dog.ceo/api/breed/',
 });
 
 export const randomImageRequest = axios.create({

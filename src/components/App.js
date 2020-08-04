@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import BreedsList from './BreedsList';
 import ImageList from './ImageList';
-import { randomImageRequest } from '../apis/axios';
+import { breedsRequest } from '../apis/axios';
 
 const App = () => {
     const [search, setSearch] = useState('');
@@ -10,8 +10,8 @@ const App = () => {
 
     useEffect(() => {
         async function getRandomImage() {
-            const image = await randomImageRequest();
-            setImages(image.data.message);
+            const image = await breedsRequest.get('/image/random');
+            setImages([image.data.message]);
         }
         getRandomImage();
     }, []);

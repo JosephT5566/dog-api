@@ -1,25 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import breedsListRequest from "../apis/axios";
+import { breedsRequest, breedRequest } from '../apis/axios';
 
 const BreedsList = (props) => {
-    const [breeds, setBreeds] = useState([]);
+    const [breedsList, setBreedsList] = useState([]);
 
     useEffect(() => {
         async function renderBreedsList() {
-            const breedsList = await breedsListRequest();
-            setBreeds(Object.keys(breedsList.data.message).filter((breed) => {
-                return breed.toLowerCase().indexOf(props.searchKey.toLowerCase()) > -1;
-            }));
+            const breedsList = await breedsRequest.get('/list/all');
+            setBreedsList(
+                Object.keys(breedsList.data.message).filter((breed) => {
+                    return (
+                        breed
+                            .toLowerCase()
+                            .indexOf(props.searchKey.toLowerCase()) > -1
+                    );
+                })
+            );
             // console.log(Object.keys(breedsList.data.message))
         }
         renderBreedsList();
     }, [props.searchKey]);
 
+    const getImages = async (breed) => {
+        const images = await breedRequest.get(`/${breed}/images`);
+        // console.log(images.data.message);
+        props.setImages(images.data.message);
+    };
+
     return (
-        breeds.map((breed) => {
-            return <div key={breed}>{breed}</div>;
-        })
+        <div className="ui list">
+            {breedsList.map((breed) => {
+                return (
+                    <a
+                        className="item"
+                        key={breed}
+                        onClick={() => {
+                            getImages(breed);
+                        }}
+                    >
+                        <i className="paw icon" />
+                        {breed}
+                    </a>
+                );
+            })}
+        </div>
     );
 };
 
