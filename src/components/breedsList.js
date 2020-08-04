@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 
 import breedsListRequest from "../apis/axios";
 
-const BreedsList = () => {
+const BreedsList = (props) => {
     const [breeds, setBreeds] = useState([]);
 
     useEffect(() => {
         async function renderBreedsList() {
             const breedsList = await breedsListRequest();
-            setBreeds(Object.keys(breedsList.data.message));
+            setBreeds(Object.keys(breedsList.data.message).filter((breed) => {
+                return breed.toLowerCase().indexOf(props.searchKey.toLowerCase()) > -1;
+            }));
             // console.log(Object.keys(breedsList.data.message))
         }
         renderBreedsList();
-    }, []);
+    }, [props.searchKey]);
 
     return (
         breeds.map((breed) => {
