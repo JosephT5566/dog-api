@@ -17,24 +17,24 @@ const App = () => {
     }, []);
 
     return (
-        <div className="ui container">
-            <div className="ui grid">
-                <div className="three wide column">
-                    <div className="ui search">
-                        <input
-                            className="prompt"
-                            type="text"
-                            placeholder="Search..."
-                            value={search}
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                                // console.log(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <BreedsList searchKey={search} setImages={setImages} />
+        <div className="ui padded equal height grid">
+            <div className="three wide column">
+                <div className="ui search">
+                    <input
+                        className="prompt"
+                        type="text"
+                        placeholder="Search..."
+                        value={search}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            // console.log(e.target.value);
+                        }}
+                    />
                 </div>
-                <div className="thirteen wide column">
+                <BreedsList searchKey={search} setImages={setImages} />
+            </div>
+            <div className="thirteen wide column">
+                <div style={{ display: 'grid' }}>
                     <ImageList images={images} />
                 </div>
             </div>
