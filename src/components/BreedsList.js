@@ -8,19 +8,18 @@ const BreedsList = ({ searchKey, setImages }) => {
 
     useEffect(() => {
         async function renderBreedsList() {
-            const getBreedsList = await breedsRequest.get('/list/all');
+            const breeds = await breedsRequest.get('/list/all');
             setBreedsList(
-                Object.keys(getBreedsList.data.message)
-                    .filter((breed) => {
+                Object.keys(breeds.data.message)
+                    .filter((breedKey) => {
                         return (
-                            breed
+                            breedKey
                                 .toLowerCase()
                                 .indexOf(searchKey.toLowerCase()) > -1
                         );
                     })
                     .reduce((obj, key) => {
-                        obj[key] = getBreedsList.data.message[key];
-                        return obj;
+                        return { ...obj, [key]: breeds.data.message[key] };
                     }, {})
             );
             // console.log(Object.keys(breedsList.data.message))
@@ -36,9 +35,9 @@ const BreedsList = ({ searchKey, setImages }) => {
 
     return (
         <div className="ui accordion">
-            {Object.keys(breedsList).map((breed) => {
+            {Object.keys(breedsList).map((breed, index) => {
                 return (
-                    <div key={breed}>
+                    <div key={index}>
                         <div
                             className="item"
                             style={{ cursor: 'pointer' }}

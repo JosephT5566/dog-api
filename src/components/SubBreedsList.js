@@ -8,10 +8,10 @@ const SubBreedsList = ({ breed, setImages, subBreedsList }) => {
         setImages(images.data.message);
     };
 
-    return subBreedsList.map((subBreed) => {
+    return subBreedsList.map((subBreed, index) => {
         return (
             <div
-                key={subBreed}
+                key={index}
                 style={{ marginLeft: '8%', cursor: 'pointer' }}
                 onClick={() => getImages(subBreed)}
             >
