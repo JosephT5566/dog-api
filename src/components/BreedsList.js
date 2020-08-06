@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { breedsRequest, breedRequest } from '../apis/axios';
 import SubBreedsList from './SubBreedsList';
 
-const BreedsList = (props) => {
+const BreedsList = ({ searchKey, setImages }) => {
     const [breedsList, setBreedsList] = useState({});
 
     useEffect(() => {
@@ -15,7 +15,7 @@ const BreedsList = (props) => {
                         return (
                             breed
                                 .toLowerCase()
-                                .indexOf(props.searchKey.toLowerCase()) > -1
+                                .indexOf(searchKey.toLowerCase()) > -1
                         );
                     })
                     .reduce((obj, key) => {
@@ -26,12 +26,12 @@ const BreedsList = (props) => {
             // console.log(Object.keys(breedsList.data.message))
         }
         renderBreedsList();
-    }, [props.searchKey]);
+    }, [searchKey]);
 
     const getImages = async (breed) => {
         const images = await breedRequest.get(`/${breed}/images`);
         // console.log(images.data.message);
-        props.setImages(images.data.message);
+        setImages(images.data.message);
     };
 
     return (
@@ -52,7 +52,7 @@ const BreedsList = (props) => {
                         <SubBreedsList
                             breed={breed}
                             subBreedsList={breedsList[breed]}
-                            setImages={props.setImages}
+                            setImages={setImages}
                         />
                     </div>
                 );

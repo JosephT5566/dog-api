@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ImageList = (props) => {
+const ImageList = ({ images }) => {
     const renderImages = () => {
-        return props.images.map((image) => {
+        return images.map((image) => {
             return (
                 <img
                     className="ui medium rounded image"

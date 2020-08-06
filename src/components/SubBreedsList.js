@@ -2,15 +2,13 @@ import React from 'react';
 
 import { breedRequest } from '../apis/axios';
 
-const SubBreedsList = (props) => {
+const SubBreedsList = ({ breed, setImages, subBreedsList }) => {
     const getImages = async (subBreed) => {
-        const images = await breedRequest.get(
-            `/${props.breed}/${subBreed}/images`
-        );
-        props.setImages(images.data.message);
+        const images = await breedRequest.get(`/${breed}/${subBreed}/images`);
+        setImages(images.data.message);
     };
 
-    return props.subBreedsList.map((subBreed) => {
+    return subBreedsList.map((subBreed) => {
         return (
             <div
                 key={subBreed}
