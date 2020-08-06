@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
+import Header from './Header';
 import BreedsPage from './BreedsPage';
 
 const App = () => {
@@ -8,6 +9,7 @@ const App = () => {
         <div className="ui container">
             <BrowserRouter>
                 <div>
+                    <Header/>
                     <Route path="/" exact component={BreedsPage}/>
                     {/* <Route path="/random" exact component={RandomPage}/> */}
                 </div>
