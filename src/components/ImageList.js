@@ -1,18 +1,11 @@
 import React from 'react';
 
+import ImageCard from './ImageCard';
+
 const ImageList = ({ images }) => {
     const renderImages = () => {
         return images.map((image, index) => {
-            return (
-                <div style={{ gridRowEnd: `span 10` }}>
-                    <img
-                        className="ui medium rounded image"
-                        key={index}
-                        src={image}
-                        alt={image}
-                    />
-                </div>
-            );
+            return <ImageCard key={index} image={image} />;
         });
     };
 
