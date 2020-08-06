@@ -35,9 +35,7 @@ const BreedsPage = () => {
                 <BreedsList searchKey={search} setImages={setImages} />
             </div>
             <div className="thirteen wide column">
-                <div style={{ display: 'grid' }}>
-                    <ImageList images={images} />
-                </div>
+                <ImageList images={images} />
             </div>
         </div>
     );
