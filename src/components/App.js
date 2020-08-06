@@ -1,43 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-import BreedsList from './BreedsList';
-import ImageList from './ImageList';
-import { breedsRequest } from '../apis/axios';
+import BreedsPage from './BreedsPage';
 
 const App = () => {
-    const [search, setSearch] = useState('');
-    const [images, setImages] = useState([]);
-
-    useEffect(() => {
-        async function getRandomImage() {
-            const image = await breedsRequest.get('/image/random');
-            setImages([image.data.message]);
-        }
-        getRandomImage();
-    }, []);
-
     return (
-        <div className="ui padded equal height grid">
-            <div className="three wide column">
-                <div className="ui search">
-                    <input
-                        className="prompt"
-                        type="text"
-                        placeholder="Search..."
-                        value={search}
-                        onChange={(e) => {
-                            setSearch(e.target.value);
-                            // console.log(e.target.value);
-                        }}
-                    />
+        <div className="ui container">
+            <BrowserRouter>
+                <div>
+                    <Route path="/" exact component={BreedsPage}/>
+                    {/* <Route path="/random" exact component={RandomPage}/> */}
                 </div>
-                <BreedsList searchKey={search} setImages={setImages} />
-            </div>
-            <div className="thirteen wide column">
-                <div style={{ display: 'grid' }}>
-                    <ImageList images={images} />
-                </div>
-            </div>
+            </BrowserRouter>
         </div>
     );
 };
