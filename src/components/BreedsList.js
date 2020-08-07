@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
 
 import { breedRequest } from '../apis/axios';
 import SubBreedsList from './SubBreedsList';
@@ -26,31 +27,44 @@ const BreedsList = ({ breedsList, searchKey, setImages }) => {
         setImages(images.data.message);
     };
 
-    return (
-        <div className="ui accordion">
-            {Object.keys(renderedList).map((breed, index) => {
-                return (
-                    <div key={index}>
-                        <div
-                            className="item"
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => {
-                                getImages(breed);
-                            }}
-                        >
-                            <i className="dropdown icon" />
-                            {breed}
+    if (_.isEmpty(renderedList)) {
+        return (
+            <div className="ui placeholder">
+                <div className="line"></div>
+                <div className="large line"></div>
+                <div className="large line"></div>
+                <div className="line"></div>
+                <div className="line"></div>
+                <div className="line"></div>
+            </div>
+        );
+    } else {
+        return (
+            <div className="ui accordion">
+                {Object.keys(renderedList).map((breed, index) => {
+                    return (
+                        <div key={index}>
+                            <div
+                                className="item"
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => {
+                                    getImages(breed);
+                                }}
+                            >
+                                <i className="dropdown icon" />
+                                {breed}
+                            </div>
+                            <SubBreedsList
+                                breed={breed}
+                                subBreedsList={renderedList[breed]}
+                                setImages={setImages}
+                            />
                         </div>
-                        <SubBreedsList
-                            breed={breed}
-                            subBreedsList={renderedList[breed]}
-                            setImages={setImages}
-                        />
-                    </div>
-                );
-            })}
-        </div>
-    );
+                    );
+                })}
+            </div>
+        );
+    }
 };
 
 export default BreedsList;
