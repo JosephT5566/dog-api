@@ -30,12 +30,16 @@ const BreedsList = ({ breedsList, searchKey, setImages }) => {
     if (_.isEmpty(renderedList)) {
         return (
             <div className="ui placeholder">
-                <div className="line"></div>
-                <div className="large line"></div>
-                <div className="large line"></div>
-                <div className="line"></div>
-                <div className="line"></div>
-                <div className="line"></div>
+                <div className="very long line"></div>
+                <div className="very long line"></div>
+                <div className="very long line"></div>
+                <div className="very long line"></div>
+                <div className="very long line"></div>
+                <div className="very long line"></div>
+                <div className="very long line"></div>
+                <div className="very long line"></div>
+                <div className="very long line"></div>
+                <div className="very long line"></div>
             </div>
         );
     } else {
