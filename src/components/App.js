@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import Header from './Header';
-import BreedsPage from './BreedsPage';
+import BreedsPage from './pages/BreedsPage';
 
 const App = () => {
     return (

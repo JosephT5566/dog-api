@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import BreedsList from './BreedsList';
 import ImageList from './ImageList';
-import { breedsRequest } from '../apis/axios';
+import { breedsRequest } from '../../../apis/axios';
 
 const BreedsPage = () => {
     const [search, setSearch] = useState('');

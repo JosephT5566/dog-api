@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 
-import { breedRequest } from '../apis/axios';
+import { breedRequest } from '../../../apis/axios';
 import SubBreedsList from './SubBreedsList';
 
 const BreedsList = ({ breedsList, searchKey, setImages }) => {

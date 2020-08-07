@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { breedRequest } from '../apis/axios';
+import { breedRequest } from '../../../apis/axios';
 
 const SubBreedsList = ({ breed, setImages, subBreedsList }) => {
     const getImages = async (subBreed) => {
