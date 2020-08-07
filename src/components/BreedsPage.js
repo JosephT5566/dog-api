@@ -7,6 +7,7 @@ import { breedsRequest } from '../apis/axios';
 const BreedsPage = () => {
     const [search, setSearch] = useState('');
     const [images, setImages] = useState([]);
+    const [breedsList, setBreedsList] = useState({});
 
     useEffect(() => {
         async function getRandomImage() {
@@ -14,7 +15,13 @@ const BreedsPage = () => {
             const image = await breedsRequest.get('/image/random');
             setImages([image.data.message]);
         }
+        async function getBreedsList() {
+            const response = await breedsRequest.get('/list/all');
+            setBreedsList(response.data.message);
+            // console.log(breedsList);
+        }
         getRandomImage();
+        getBreedsList();
     }, []);
 
     return (
@@ -32,7 +39,11 @@ const BreedsPage = () => {
                         }}
                     />
                 </div>
-                <BreedsList searchKey={search} setImages={setImages} />
+                <BreedsList
+                    breedsList={breedsList}
+                    searchKey={search}
+                    setImages={setImages}
+                />
             </div>
             <div className="thirteen wide column">
                 <ImageList images={images} />
