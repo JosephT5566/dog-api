@@ -1,34 +1,17 @@
 import React from 'react';
 
-class ImageCard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.imageRef = React.createRef();
-        this.state = { spanCounts: 0 };
+const ImageCard = ({ image }) => {
+    const onImgLoad = ({target}) => {
+        // console.log(target.src);
+        // console.log(target.naturalHeight);
+        // console.log(target.naturalWidth);
     }
 
-    componentDidMount() {
-        this.imageRef.current.addEventListener('load', this.setSpanCounts);
-    }
-
-    setSpanCounts = () => {
-        const height = this.imageRef.current.clientHeight;
-        const spanCounts = Math.ceil(height / 10);
-        this.setState({ spanCounts });
-    };
-
-    render() {
-        return (
-            <div style={{ gridRowEnd: `span ${this.state.spanCounts}` }}>
-                <img
-                    className="ui medium rounded image"
-                    src={this.props.image}
-                    alt={this.props.image}
-                    ref={this.imageRef}
-                />
-            </div>
-        );
-    }
-}
+    return (
+        <div className="column">
+            <img className="ui medium image" onLoad={onImgLoad} src={image} alt={image} />
+        </div>
+    );
+};
 
 export default ImageCard;
