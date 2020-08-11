@@ -27,7 +27,7 @@ const BreedsList = ({ breedsList, searchKey, setImages }) => {
         setImages(images.data.message);
     };
 
-    if (_.isEmpty(renderedList)) {
+    const renderPlaceholder = () => {
         return (
             <div className="ui placeholder">
                 <div className="very long line"></div>
@@ -42,7 +42,9 @@ const BreedsList = ({ breedsList, searchKey, setImages }) => {
                 <div className="very long line"></div>
             </div>
         );
-    } else {
+    };
+
+    const renderBreedsList = () => {
         return (
             <div className="ui accordion">
                 {Object.keys(renderedList).map((breed, index) => {
@@ -68,7 +70,9 @@ const BreedsList = ({ breedsList, searchKey, setImages }) => {
                 })}
             </div>
         );
-    }
+    };
+
+    return _.isEmpty(renderedList) ? renderPlaceholder() : renderBreedsList();
 };
 
 export default BreedsList;

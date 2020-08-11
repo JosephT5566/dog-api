@@ -43,7 +43,6 @@ const RandomPage = () => {
             <h1 className="i header">Get Random Image</h1>
             <button
                 className="ui orange button"
-                style={{ margin: '0 auto' }}
                 onClick={getImage}
             >
                 Get Image
