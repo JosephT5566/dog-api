@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { breedRequest } from '../../../apis/axios';
+const SubBreedsList = ({ breed, setBreed, subBreedsList }) => {
+    const [selectedItem, setSelectedItem] = useState(null);
 
-const SubBreedsList = ({ breed, setImages, subBreedsList }) => {
-    const getImages = async (subBreed) => {
-        const images = await breedRequest.get(`/${breed}/${subBreed}/images`);
-        setImages(images.data.message);
-    };
+    useEffect(() => {
+        if (selectedItem) {
+            setBreed(
+                `${breed}/${selectedItem}`
+            );
+        }
+    }, [selectedItem]);
 
     return subBreedsList.map((subBreed, index) => {
         return (
             <div
                 key={index}
                 style={{ marginLeft: '8%', cursor: 'pointer' }}
-                onClick={() => getImages(subBreed)}
+                onClick={() => setSelectedItem(subBreed)}
             >
                 {subBreed}
             </div>

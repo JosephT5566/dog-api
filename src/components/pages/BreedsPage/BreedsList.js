@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 
-import { breedRequest } from '../../../apis/axios';
 import SubBreedsList from './SubBreedsList';
 
-const BreedsList = ({ breedsList, searchKey, setImages }) => {
+const BreedsList = ({ breedsList, searchKey, setBreed }) => {
     const [renderedList, setRenderedList] = useState(breedsList);
+    const [selectedItem, setSelectedItem] = useState(null);
 
     useEffect(() => {
         let newRenderList = Object.keys(breedsList)
@@ -21,11 +21,11 @@ const BreedsList = ({ breedsList, searchKey, setImages }) => {
         setRenderedList(newRenderList);
     }, [searchKey, breedsList]);
 
-    const getImages = async (breed) => {
-        const images = await breedRequest.get(`/${breed}/images`);
-        // console.log(images.data.message);
-        setImages(images.data.message);
-    };
+    useEffect(() => {
+        if (selectedItem) {
+            setBreed(`${selectedItem}`);
+        }
+    }, [selectedItem]);
 
     const renderPlaceholder = () => {
         return (
@@ -54,7 +54,7 @@ const BreedsList = ({ breedsList, searchKey, setImages }) => {
                                 className="item"
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => {
-                                    getImages(breed);
+                                    setSelectedItem(breed);
                                 }}
                             >
                                 <i className="dropdown icon" />
@@ -63,7 +63,7 @@ const BreedsList = ({ breedsList, searchKey, setImages }) => {
                             <SubBreedsList
                                 breed={breed}
                                 subBreedsList={renderedList[breed]}
-                                setImages={setImages}
+                                setBreed={setBreed}
                             />
                         </div>
                     );

@@ -2,39 +2,33 @@ import React, { useState, useEffect } from 'react';
 
 import BreedsList from './BreedsList';
 import ImageList from './ImageList';
-import { breedsRequest, breedRequest } from '../../../apis/axios';
+import { breedsRequest } from '../../../apis/axios';
 
 const BreedsPage = () => {
     const [search, setSearch] = useState('');
-    const [images, setImages] = useState([]);
+    const [breed, setBreed] = useState('');
     const [breedsList, setBreedsList] = useState({});
     const [isDelayed, setIsDelayed] = useState(false);
 
     useEffect(() => {
-        async function getRandomImage() {
-            // const {message: image} = await (await fetch('https://dog.ceo/api/breeds/image/random', {})).json();
-            const image = await breedRequest.get('/husky/images');
-            setImages(image.data.message);
-        }
-        async function getBreedsList() {
-            const response = await breedsRequest.get('/list/all');
-            setBreedsList(response.data.message);
-            // console.log(breedsList);
-        }
-
         setTimeout(
             () => {
-                getRandomImage();
                 getBreedsList();
+                setBreed('RANDOM');
             },
             isDelayed ? 3000 : 0
         );
 
-        return function cleanImagesAndList() {
+        return function componentDidUpdate() {
             setBreedsList({});
-            setImages([]);
+            setBreed('');
         };
     }, [isDelayed]);
+
+    async function getBreedsList() {
+        const response = await breedsRequest.get('/list/all');
+        setBreedsList(response.data.message);
+    }
 
     const buttonClassName = () => {
         return isDelayed ? 'ui red button' : 'ui green button';
@@ -77,11 +71,11 @@ const BreedsPage = () => {
                 <BreedsList
                     breedsList={breedsList}
                     searchKey={search}
-                    setImages={setImages}
+                    setBreed={setBreed}
                 />
             </div>
             <div className="thirteen wide column">
-                <ImageList images={images} />
+                <ImageList key={breed} breed={breed} />
             </div>
         </div>
     );

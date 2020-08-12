@@ -1,25 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import Gallery from 'react-grid-gallery';
 
-const ImageList = ({ images }) => {
+const ImageList = ({ breed }) => {
     const [imageSet, setImageSet] = useState([]);
+    const [url, setUrl] = useState(null);
 
     useEffect(() => {
-        console.log(images);
-        images.map((image) => {
-            getImageMetaAndSet(image);
-        });
+        // console.log('did mount');
+        switch (breed) {
+            case '':
+                break;
+            case 'RANDOM':
+                console.log(breed);
+                setUrl('https://dog.ceo/api/breeds/image/random');
+                break;
+            default:
+                console.log(breed);
+                setUrl(`https://dog.ceo/api/breed/${breed}/images`);
+                break;
+        }
 
-        return function cleanImageSet() {
-            setImageSet([]);
+        return function didUnmount() {
+            // console.log('unmount');
         };
-    }, [images]);
+    }, []);
 
-    useEffect (() => {
-        console.log(imageSet);
-    }, [imageSet])
+    useEffect(() => {
+        if (!url) return;
+        getImages();
+    }, [url]);
 
-    const getImageMetaAndSet = (url) => {
+    async function getImages() {
+        fetch(url, {})
+            .then((response) => response.json())
+            .then(({ message: images }) => {
+                return Array.isArray(images) ? images : [images];
+            })
+            .then((imageUrls) => {
+                imageUrls.map((imageUrl) => getImageMetaAndSet(imageUrl));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    const getImageMetaAndSet = (imageUrl) => {
         let img = new Image();
 
         img.addEventListener('load', () => {
@@ -27,18 +52,18 @@ const ImageList = ({ images }) => {
             // console.log('width: ' + img.naturalWidth);
             setImageSet((imageSet) =>
                 imageSet.concat({
-                    src: url,
-                    thumbnail: url,
+                    src: imageUrl,
+                    thumbnail: imageUrl,
                     thumbnailWidth: img.naturalWidth,
                     thumbnailHeight: img.naturalHeight,
                 })
             );
         });
 
-        img.src = url;
+        img.src = imageUrl;
     };
 
-    if (imageSet.length === 0) {
+    const renderPlaceholder = () => {
         return (
             <div className="ui grid">
                 <div className="four column row">
@@ -65,7 +90,9 @@ const ImageList = ({ images }) => {
                 </div>
             </div>
         );
-    } else {
+    };
+
+    const renderImageList = () => {
         return (
             <Gallery
                 images={imageSet}
@@ -74,7 +101,8 @@ const ImageList = ({ images }) => {
                 margin={4}
             />
         );
-    }
+    };
+    return imageSet.length === 0 ? renderPlaceholder() : renderImageList();
 };
 
 export default ImageList;
