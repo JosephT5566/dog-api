@@ -25,7 +25,7 @@ const BreedsList = ({ breedsList, searchKey, setBreed }) => {
         if (selectedItem) {
             setBreed(`${selectedItem}`);
         }
-    }, [selectedItem]);
+    }, [selectedItem, setBreed]);
 
     const renderPlaceholder = () => {
         return (

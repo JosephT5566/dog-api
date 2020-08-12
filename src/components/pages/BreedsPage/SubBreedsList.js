@@ -9,7 +9,7 @@ const SubBreedsList = ({ breed, setBreed, subBreedsList }) => {
                 `${breed}/${selectedItem}`
             );
         }
-    }, [selectedItem]);
+    }, [selectedItem, setBreed, breed]);
 
     return subBreedsList.map((subBreed, index) => {
         return (

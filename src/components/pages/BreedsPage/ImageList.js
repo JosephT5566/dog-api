@@ -1,63 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Gallery from 'react-grid-gallery';
 
 const ImageList = ({ breed }) => {
     const [imageSet, setImageSet] = useState([]);
-    const [url, setUrl] = useState(null);
+    const ref = useRef(true);
 
     useEffect(() => {
-        // console.log('did mount');
-        switch (breed) {
-            case '':
-                break;
-            case 'RANDOM':
-                console.log(breed);
-                setUrl('https://dog.ceo/api/breeds/image/random');
-                break;
-            default:
-                console.log(breed);
-                setUrl(`https://dog.ceo/api/breed/${breed}/images`);
-                break;
-        }
-
-        return function didUnmount() {
-            // console.log('unmount');
+        return () => {
+            // console.log('did unmount');
+            ref.current = false;
         };
     }, []);
 
     useEffect(() => {
-        if (!url) return;
-        getImages();
-    }, [url]);
+        let myUrl = '';
+        switch (breed) {
+            case '':
+                break;
+            case 'RANDOM':
+                myUrl = 'https://dog.ceo/api/breeds/image/random';
+                break;
+            default:
+                myUrl = `https://dog.ceo/api/breed/${breed}/images`;
+                break;
+        }
 
-    async function getImages() {
-        fetch(url, {})
+        fetch(myUrl, {})
             .then((response) => response.json())
             .then(({ message: images }) => {
                 return Array.isArray(images) ? images : [images];
             })
             .then((imageUrls) => {
-                imageUrls.map((imageUrl) => getImageMetaAndSet(imageUrl));
+                imageUrls.map((imageUrl) => {
+                    getImageMetaAndSet(imageUrl);
+                });
             })
             .catch((error) => {
                 console.log(error);
             });
-    }
+    }, [breed]);
 
     const getImageMetaAndSet = (imageUrl) => {
         let img = new Image();
 
         img.addEventListener('load', () => {
-            // console.log('height: ' + img.naturalHeight);
-            // console.log('width: ' + img.naturalWidth);
-            setImageSet((imageSet) =>
-                imageSet.concat({
-                    src: imageUrl,
-                    thumbnail: imageUrl,
-                    thumbnailWidth: img.naturalWidth,
-                    thumbnailHeight: img.naturalHeight,
-                })
-            );
+            if (ref.current) {
+                // console.log(ref.current);
+                setImageSet((imageSet) =>
+                    imageSet.concat({
+                        src: imageUrl,
+                        thumbnail: imageUrl,
+                        thumbnailWidth: img.naturalWidth,
+                        thumbnailHeight: img.naturalHeight,
+                    })
+                );
+            } else {
+                // console.log("i'm unmount");
+            }
         });
 
         img.src = imageUrl;
