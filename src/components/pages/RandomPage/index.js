@@ -1,19 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+import useSafeSet from '../../assets/useSafeSet';
+
 const RandomPage = () => {
     const [imageUrl, setImageUrl] = useState('');
+    const safeSet = useSafeSet();
 
     useEffect(() => {
         getImage();
     }, []);
 
     const getImage = async () => {
-        setImageUrl('');
         try {
+            safeSet(() => setImageUrl(''));
             const { message: image } = await (
                 await fetch('https://dog.ceo/api/breeds/image/random', {})
             ).json();
-            setImageUrl(image);
+            safeSet(() => setImageUrl(image));
         } catch (err) {
             alert(err);
         }
@@ -48,16 +51,10 @@ const RandomPage = () => {
 
 const RandomImage = ({ imageUrl }) => {
     const [url, setUrl] = useState(null);
-    const ref = useRef(true);
+    const safeSet = useSafeSet();
 
     useEffect(() => {
-        if (ref.current) {
-            setUrl(imageUrl);
-        }
-
-        return () => {
-            ref.current = false;
-        };
+        safeSet(() => setUrl(imageUrl));
     }, [imageUrl]);
 
     return (
