@@ -56,20 +56,20 @@ const BreedsPage = () => {
         <div className="ui padded equal height grid">
             <div className="row">{renderDelayButton()}</div>
             <div className="four wide column">
-                <div style={{ height: '100vh', overflow: 'auto' }}>
                     <div className="ui search">
                         <input
                             className="prompt"
                             type="text"
                             placeholder="Search..."
                             value={search}
-                            style={{ width: '95%' }}
+                            style={{ height: '10vh', width: '95%' }}
                             onChange={(e) => {
                                 setSearch(e.target.value);
                                 // console.log(e.target.value);
                             }}
                         />
                     </div>
+                <div style={{ height: '88vh', overflow: 'auto', marginTop: '2vh'}}>
                     <BreedsList
                         breedsList={breedsList}
                         searchKey={search}
