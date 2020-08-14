@@ -55,27 +55,32 @@ const BreedsPage = () => {
     return (
         <div className="ui padded equal height grid">
             <div className="row">{renderDelayButton()}</div>
-            <div className="three wide column">
-                <div className="ui search">
-                    <input
-                        className="prompt"
-                        type="text"
-                        placeholder="Search..."
-                        value={search}
-                        onChange={(e) => {
-                            setSearch(e.target.value);
-                            // console.log(e.target.value);
-                        }}
+            <div className="four wide column">
+                <div style={{ height: '100vh', overflow: 'auto' }}>
+                    <div className="ui search">
+                        <input
+                            className="prompt"
+                            type="text"
+                            placeholder="Search..."
+                            value={search}
+                            style={{ width: '95%' }}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                // console.log(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <BreedsList
+                        breedsList={breedsList}
+                        searchKey={search}
+                        setBreed={setBreed}
                     />
                 </div>
-                <BreedsList
-                    breedsList={breedsList}
-                    searchKey={search}
-                    setBreed={setBreed}
-                />
             </div>
-            <div className="thirteen wide column">
-                <ImageList key={breed} breed={breed} />
+            <div className="twelve wide column">
+                <div style={{ height: '100vh', overflow: 'auto' }}>
+                    <ImageList key={breed} breed={breed} />
+                </div>
             </div>
         </div>
     );
