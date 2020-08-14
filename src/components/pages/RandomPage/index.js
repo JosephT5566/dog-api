@@ -1,20 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import useSafeSet from '../../assets/useSafeSet';
+import { useRef } from 'react';
 
 const RandomPage = () => {
     const [imageUrl, setImageUrl] = useState('');
     const safeSet = useSafeSet();
+    const randomUrl = 'https://dog.ceo/api/breeds/image/random';
 
     useEffect(() => {
-        getImage();
-    }, []);
+        fetch(randomUrl, {})
+            .then((response) => response.json())
+            .then((result) => {
+                safeSet(() => setImageUrl(result.message));
+            })
+            .catch((err) => alert(err));
+    }, [safeSet]);
 
     const getImage = async () => {
         try {
             safeSet(() => setImageUrl(''));
             const { message: image } = await (
-                await fetch('https://dog.ceo/api/breeds/image/random', {})
+                await fetch(randomUrl, {})
             ).json();
             safeSet(() => setImageUrl(image));
         } catch (err) {
@@ -51,10 +58,16 @@ const RandomPage = () => {
 
 const RandomImage = ({ imageUrl }) => {
     const [url, setUrl] = useState(null);
-    const safeSet = useSafeSet();
+    const ref = useRef(true);
 
     useEffect(() => {
-        safeSet(() => setUrl(imageUrl));
+        if (ref.current) {
+            setUrl(imageUrl);
+        }
+        return () => {
+            // did update
+            ref.current = false;
+        };
     }, [imageUrl]);
 
     return (
