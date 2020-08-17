@@ -20,9 +20,9 @@ const RandomPage = () => {
     }, [safeSet]);
 
     const getImage = async () => {
-        if (isDelay) await delay(3000);
         try {
             safeSet(() => setImageUrl(''));
+            if (isDelay) await delay(3000);
             const { message: image } = await (
                 await fetch(randomUrl, {})
             ).json();
