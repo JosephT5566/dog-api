@@ -1,75 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import BreedsList from './BreedsList';
 import ImageList from './ImageList';
 import { breedsRequest } from '../../../apis/axios';
+import delay from '../../assets/delay';
+import ContextStore from '../../reducers/store';
 
 const BreedsPage = () => {
     const [search, setSearch] = useState('');
     const [breed, setBreed] = useState('');
     const [breedsList, setBreedsList] = useState({});
-    const [isDelayed, setIsDelayed] = useState(false);
+
+    const { isDelay } = useContext(ContextStore);
 
     useEffect(() => {
-        setTimeout(
-            () => {
-                getBreedsList();
-                setBreed('RANDOM');
-            },
-            isDelayed ? 3000 : 0
-        );
-
+        initialize();
+        
         return function componentDidUpdate() {
             setBreedsList({});
             setBreed('');
         };
-    }, [isDelayed]);
-
-    async function getBreedsList() {
+    }, [isDelay]);
+    
+    async function initialize() {
+        if (isDelay) await delay(3000);
         const response = await breedsRequest.get('/list/all');
         setBreedsList(response.data.message);
+        setBreed('RANDOM');
     }
-
-    const buttonClassName = () => {
-        return isDelayed ? 'ui red button' : 'ui green button';
-    };
-
-    const buttonContent = () => {
-        return isDelayed ? 'Cancel Delay' : 'Delay API';
-    };
-
-    const renderDelayButton = () => {
-        return (
-            <button
-                className={buttonClassName()}
-                onClick={() => {
-                    setIsDelayed(!isDelayed);
-                }}
-                style={{ width: '15%' }}
-            >
-                {buttonContent()}
-            </button>
-        );
-    };
 
     return (
         <div className="ui padded equal height grid">
-            <div className="row">{renderDelayButton()}</div>
             <div className="four wide column">
-                    <div className="ui search">
-                        <input
-                            className="prompt"
-                            type="text"
-                            placeholder="Search..."
-                            value={search}
-                            style={{ height: '10vh', width: '95%' }}
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                                // console.log(e.target.value);
-                            }}
-                        />
-                    </div>
-                <div style={{ height: '88vh', overflow: 'auto', marginTop: '2vh'}}>
+                <div className="ui search">
+                    <input
+                        className="prompt"
+                        type="text"
+                        placeholder="Search..."
+                        value={search}
+                        style={{ height: '10vh', width: '95%' }}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            // console.log(e.target.value);
+                        }}
+                    />
+                </div>
+                <div
+                    style={{
+                        height: '88vh',
+                        overflow: 'auto',
+                        marginTop: '2vh',
+                    }}
+                >
                     <BreedsList
                         breedsList={breedsList}
                         searchKey={search}

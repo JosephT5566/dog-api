@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 
 import useSafeSet from '../../assets/useSafeSet';
-import { useRef } from 'react';
+import delay from '../../assets/delay'
+import ContextStore from '../../reducers/store';
 
 const RandomPage = () => {
     const [imageUrl, setImageUrl] = useState('');
+    const { isDelay } = useContext(ContextStore);
     const safeSet = useSafeSet();
     const randomUrl = 'https://dog.ceo/api/breeds/image/random';
 
@@ -18,6 +20,7 @@ const RandomPage = () => {
     }, [safeSet]);
 
     const getImage = async () => {
+        if (isDelay) await delay(3000);
         try {
             safeSet(() => setImageUrl(''));
             const { message: image } = await (

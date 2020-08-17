@@ -1,9 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import Gallery from 'react-grid-gallery';
+
+import delay from '../../assets/delay';
+import ContextStore from '../../reducers/store';
 
 const ImageList = ({ breed }) => {
     const [imageSet, setImageSet] = useState([]);
     const ref = useRef(true);
+
+    const { isDelay } = useContext(ContextStore);
 
     useEffect(() => {
         return () => {
@@ -13,32 +18,36 @@ const ImageList = ({ breed }) => {
     }, []);
 
     useEffect(() => {
-        let myUrl = '';
+        let url = '';
         switch (breed) {
             case '':
                 break;
             case 'RANDOM':
-                myUrl = 'https://dog.ceo/api/breeds/image/random';
+                url = 'https://dog.ceo/api/breeds/image/random';
                 break;
             default:
-                myUrl = `https://dog.ceo/api/breed/${breed}/images`;
+                url = `https://dog.ceo/api/breed/${breed}/images`;
                 break;
         }
 
-        fetch(myUrl, {})
-            .then((response) => response.json())
-            .then(({ message: images }) => {
-                return Array.isArray(images) ? images : [images];
-            })
-            .then((imageUrls) => {
-                imageUrls.map((imageUrl) => {
-                    getImageMetaAndSet(imageUrl);
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        fetchImages(url);
     }, [breed]);
+
+    const fetchImages = async (url) => {
+        if (isDelay) await delay(3000);
+
+        try {
+            let { message: images } = await (await fetch(url, {})).json();
+            let newImages = Array.isArray(images)
+                ? images
+                : [images];
+            newImages.map((imageUrl) => {
+                getImageMetaAndSet(imageUrl);
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const getImageMetaAndSet = (imageUrl) => {
         let img = new Image();

@@ -26,7 +26,6 @@ const Header = () => {
             >
                 {buttonContext()}
             </button>
-            <div>{`${isDelay}`}</div>
             <div className="right menu">
                 <Link to="/" className="item">
                     Breeds list
