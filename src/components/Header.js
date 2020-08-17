@@ -4,14 +4,29 @@ import ContextStore from '../components/reducers/store';
 
 const Header = () => {
     const { isDelay, dispatch } = React.useContext(ContextStore);
-    console.log(isDelay);
+
+    const buttonClass = () => {
+        return isDelay === true ? 'ui button red' : 'ui button green';
+    };
+
+    const buttonContext = () => {
+        return isDelay === true ? 'Normal' : 'Delay';
+    };
+
     return (
         <div className="ui secondary pointing menu">
             <Link to="/" className="item">
                 Dog Api
             </Link>
-            <button className="ui button" onClick={() => {dispatch({type: 'SWITCH_DELAY'})}}>123</button>
-            <div>{`${isDelay.isDelay}`}</div>
+            <button
+                className={buttonClass()}
+                onClick={() => {
+                    dispatch({ type: 'SWITCH_DELAY' });
+                }}
+            >
+                {buttonContext()}
+            </button>
+            <div>{`${isDelay}`}</div>
             <div className="right menu">
                 <Link to="/" className="item">
                     Breeds list
