@@ -100,12 +100,24 @@ const ImageList = ({ breed }) => {
 
     const renderImageList = () => {
         return (
-            <Gallery
-                images={imageSet}
-                enableLightbox={false}
-                enableImageSelection={false}
-                margin={4}
-            />
+            <div className="gallery">
+                <Gallery
+                    images={imageSet}
+                    enableLightbox={false}
+                    enableImageSelection={false}
+                    margin={4}
+                />
+                <button
+                    className="circular ui icon red huge button"
+                    style={{
+                        position: 'absolute',
+                        bottom: '15px',
+                        right: '15px',
+                    }}
+                >
+                    <i class="icon stop"></i>
+                </button>
+            </div>
         );
     };
     return imageSet.length === 0 ? renderPlaceholder() : renderImageList();
