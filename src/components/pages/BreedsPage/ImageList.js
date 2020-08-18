@@ -6,6 +6,7 @@ import ContextStore from '../../reducers/store';
 
 const ImageList = ({ breed }) => {
     const [imageSet, setImageSet] = useState([]);
+    const [stoppable, setStoppable] = useState(true);
     const ref = useRef(true);
 
     const { isDelay } = useContext(ContextStore);
@@ -69,6 +70,13 @@ const ImageList = ({ breed }) => {
         img.src = imageUrl;
     };
 
+    const onClickStopButton = () => {
+        if (ref.current === true) {
+            ref.current = false;
+            setStoppable(false);
+        }
+    };
+
     const renderPlaceholder = () => {
         return (
             <div className="ui grid">
@@ -98,6 +106,12 @@ const ImageList = ({ breed }) => {
         );
     };
 
+    const stopButtonStyle = () => {
+        return stoppable === true
+            ? { position: 'absolute', bottom: '15px', right: '15px' }
+            : { display: 'none' };
+    };
+
     const renderImageList = () => {
         return (
             <div className="gallery">
@@ -109,11 +123,8 @@ const ImageList = ({ breed }) => {
                 />
                 <button
                     className="circular ui icon red huge button"
-                    style={{
-                        position: 'absolute',
-                        bottom: '15px',
-                        right: '15px',
-                    }}
+                    style={stopButtonStyle()}
+                    onClick={onClickStopButton}
                 >
                     <i class="icon stop"></i>
                 </button>
