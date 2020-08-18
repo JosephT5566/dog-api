@@ -4,30 +4,34 @@ import BreedsList from './BreedsList';
 import ImageList from './ImageList';
 import { breedsRequest } from '../../../apis/axios';
 import delay from '../../assets/delay';
+import useSafeSet from '../../assets/useSafeSet';
 import ContextStore from '../../reducers/store';
 
 const BreedsPage = () => {
     const [search, setSearch] = useState('');
     const [breed, setBreed] = useState('');
     const [breedsList, setBreedsList] = useState({});
+    const safeSet = useSafeSet();
 
     const { isDelay } = useContext(ContextStore);
 
     useEffect(() => {
-        initialize();
-        
-        return function componentDidUpdate() {
+        async function initialSet() {
+            if (isDelay) await delay(3000);
+            const response = await breedsRequest.get('/list/all');
+            safeSet(() => {
+                setBreedsList(response.data.message);
+                setBreed('RANDOM');
+            });
+        }
+
+        initialSet();
+
+        return () => {
             setBreedsList({});
             setBreed('');
         };
     }, [isDelay]);
-    
-    async function initialize() {
-        if (isDelay) await delay(3000);
-        const response = await breedsRequest.get('/list/all');
-        setBreedsList(response.data.message);
-        setBreed('RANDOM');
-    }
 
     return (
         <div className="ui padded equal height grid">

@@ -19,6 +19,20 @@ const ImageList = ({ breed }) => {
 
     useEffect(() => {
         let url = '';
+        const fetchImages = async (url) => {
+            if (isDelay) await delay(3000);
+
+            try {
+                let { message: images } = await (await fetch(url, {})).json();
+                let newImages = Array.isArray(images) ? images : [images];
+                newImages.map((imageUrl) => {
+                    getImageMetaAndSet(imageUrl);
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
         switch (breed) {
             case '':
                 break;
@@ -31,23 +45,7 @@ const ImageList = ({ breed }) => {
         }
 
         fetchImages(url);
-    }, [breed]);
-
-    const fetchImages = async (url) => {
-        if (isDelay) await delay(3000);
-
-        try {
-            let { message: images } = await (await fetch(url, {})).json();
-            let newImages = Array.isArray(images)
-                ? images
-                : [images];
-            newImages.map((imageUrl) => {
-                getImageMetaAndSet(imageUrl);
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    }, [breed, isDelay]);
 
     const getImageMetaAndSet = (imageUrl) => {
         let img = new Image();
