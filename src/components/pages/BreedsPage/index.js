@@ -31,18 +31,18 @@ const BreedsPage = () => {
             setBreedsList({});
             setBreed('');
         };
-    }, [isDelay]);
+    }, [isDelay, safeSet]);
 
     return (
-        <div className="ui padded equal height grid">
-            <div className="four wide column">
-                <div className="ui search">
+        <div className="ui equal height grid" style={{ height: 'inherit' }}>
+            <div className="four wide column" style={{ height: 'inherit' }}>
+                <div className="ui search" style={{ height: '10%' }}>
                     <input
                         className="prompt"
                         type="text"
                         placeholder="Search..."
                         value={search}
-                        style={{ height: '10vh', width: '95%' }}
+                        style={{ width: '95%' }}
                         onChange={(e) => {
                             setSearch(e.target.value);
                             // console.log(e.target.value);
@@ -51,9 +51,8 @@ const BreedsPage = () => {
                 </div>
                 <div
                     style={{
-                        height: '88vh',
+                        height: '90%',
                         overflow: 'auto',
-                        marginTop: '2vh',
                     }}
                 >
                     <BreedsList
@@ -63,8 +62,8 @@ const BreedsPage = () => {
                     />
                 </div>
             </div>
-            <div className="twelve wide column">
-                <div style={{ height: '100vh', overflow: 'auto' }}>
+            <div className="twelve wide column" style={{ height: 'inherit' }}>
+                <div style={{ overflow: 'auto', height: '100%' }}>
                     <ImageList key={breed} breed={breed} />
                 </div>
             </div>

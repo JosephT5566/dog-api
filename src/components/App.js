@@ -10,9 +10,13 @@ const App = () => {
         <div className="ui container">
             <BrowserRouter>
                 <div>
-                    <Header/>
-                    <Route path="/" exact component={BreedsPage}/>
-                    <Route path="/random" exact component={RandomPage}/>
+                    <div className="header" style={{ height: '10vh' }}>
+                        <Header />
+                    </div>
+                    <div className="content" style={{ height: '90vh' }}>
+                        <Route path="/" exact component={BreedsPage} />
+                        <Route path="/random" exact component={RandomPage} />
+                    </div>
                 </div>
             </BrowserRouter>
         </div>
