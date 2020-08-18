@@ -126,7 +126,7 @@ const ImageList = ({ breed }) => {
                     style={stopButtonStyle()}
                     onClick={onClickStopButton}
                 >
-                    <i class="icon stop"></i>
+                    <i className="icon stop"></i>
                 </button>
             </div>
         );

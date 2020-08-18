@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
+import { Accordion, Icon } from 'semantic-ui-react';
 
 import SubBreedsList from './SubBreedsList';
 
 const BreedsList = ({ breedsList, searchKey, setBreed }) => {
     const [renderedList, setRenderedList] = useState(breedsList);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [activeIndex, setActiveIndex] = useState();
 
     useEffect(() => {
         let newRenderList = Object.keys(breedsList)
@@ -27,6 +29,13 @@ const BreedsList = ({ breedsList, searchKey, setBreed }) => {
         }
     }, [selectedItem, setBreed]);
 
+    const onTitleClick = (titleProps) => {
+        const { index } = titleProps;
+        const newIndex = activeIndex === index ? -1 : index;
+
+        setActiveIndex(newIndex);
+    };
+
     const renderPlaceholder = () => {
         return (
             <div className="ui placeholder">
@@ -44,31 +53,50 @@ const BreedsList = ({ breedsList, searchKey, setBreed }) => {
         );
     };
 
+    const renderContent = (breed, isShowIcon) => {
+        const iconStyle = (isShowIcon) => {
+            return isShowIcon ? {} : { visibility: 'hidden' };
+        };
+        return (
+            <div style={{ display: 'inline-flex' }}>
+                <div style={iconStyle(isShowIcon)}>
+                    <Icon name="dropdown" />
+                </div>
+                <div>{breed}</div>
+            </div>
+        );
+    };
+
     const renderBreedsList = () => {
         return (
-            <div className="ui accordion">
+            <Accordion>
                 {Object.keys(renderedList).map((breed, index) => {
                     return (
                         <div key={index}>
-                            <div
-                                className="item"
-                                style={{ cursor: 'pointer' }}
-                                onClick={() => {
+                            <Accordion.Title
+                                active={activeIndex === index}
+                                index={index}
+                                onClick={(e, titleProps) => {
                                     setSelectedItem(breed);
+                                    onTitleClick(titleProps);
                                 }}
                             >
-                                <i className="dropdown icon" />
-                                {breed}
-                            </div>
-                            <SubBreedsList
-                                breed={breed}
-                                subBreedsList={renderedList[breed]}
-                                setBreed={setBreed}
-                            />
+                                {renderContent(
+                                    breed,
+                                    renderedList[breed].length > 0
+                                )}
+                            </Accordion.Title>
+                            <Accordion.Content active={activeIndex === index}>
+                                <SubBreedsList
+                                    breed={breed}
+                                    subBreedsList={renderedList[breed]}
+                                    setBreed={setBreed}
+                                />
+                            </Accordion.Content>
                         </div>
                     );
                 })}
-            </div>
+            </Accordion>
         );
     };
 
