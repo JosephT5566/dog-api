@@ -5,9 +5,7 @@ const SubBreedsList = ({ breed, setBreed, subBreedsList }) => {
 
     useEffect(() => {
         if (selectedItem) {
-            setBreed(
-                `${breed}/${selectedItem}`
-            );
+            setBreed(`${breed}/${selectedItem}`);
         }
     }, [selectedItem, setBreed, breed]);
 
@@ -15,9 +13,14 @@ const SubBreedsList = ({ breed, setBreed, subBreedsList }) => {
         return (
             <div
                 key={index}
-                style={{ marginLeft: '8%', cursor: 'pointer' }}
+                style={{
+                    padding: '3px 0',
+                    marginLeft: '8%',
+                    cursor: 'pointer',
+                }}
                 onClick={() => setSelectedItem(subBreed)}
             >
+                <i className="ui icon caret right"></i>
                 {subBreed}
             </div>
         );

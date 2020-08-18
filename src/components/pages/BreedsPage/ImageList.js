@@ -108,7 +108,7 @@ const ImageList = ({ breed }) => {
 
     const stopButtonStyle = () => {
         return stoppable === true
-            ? { position: 'absolute', bottom: '15px', right: '15px' }
+            ? { position: 'absolute', bottom: '30px', right: '30px' }
             : { display: 'none' };
     };
 

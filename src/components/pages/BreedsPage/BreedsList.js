@@ -80,13 +80,17 @@ const BreedsList = ({ breedsList, searchKey, setBreed }) => {
                                     setSelectedItem(breed);
                                     onTitleClick(titleProps);
                                 }}
+                                style={{ padding: '3px 0' }}
                             >
                                 {renderContent(
                                     breed,
                                     renderedList[breed].length > 0
                                 )}
                             </Accordion.Title>
-                            <Accordion.Content active={activeIndex === index}>
+                            <Accordion.Content
+                                active={activeIndex === index}
+                                style={{ padding: '0px' }}
+                            >
                                 <SubBreedsList
                                     breed={breed}
                                     subBreedsList={renderedList[breed]}
