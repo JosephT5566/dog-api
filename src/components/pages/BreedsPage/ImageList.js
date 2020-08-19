@@ -28,6 +28,7 @@ const ImageList = ({ breed }) => {
                 let newImages = Array.isArray(images) ? images : [images];
                 newImages.map((imageUrl) => {
                     getImageMetaAndSet(imageUrl);
+                    return imageUrl;
                 });
             } catch (err) {
                 console.log(err);
