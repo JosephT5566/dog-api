@@ -6,7 +6,8 @@ import ContextStore from '../../reducers/store';
 
 const RandomPage = () => {
     const [imageUrl, setImageUrl] = useState('');
-    const { isDelay } = useContext(ContextStore);
+    const [state] = useContext(ContextStore);
+    const isDelay = state.isDelay.isDelay;
     const safeSet = useSafeSet();
     const randomUrl = 'https://dog.ceo/api/breeds/image/random';
 

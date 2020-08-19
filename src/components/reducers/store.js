@@ -1,7 +1,5 @@
 import React from 'react';
 
-const ContextStore = React.createContext({
-    isDelay: false,
-});
+const ContextStore = React.createContext();
 
 export default ContextStore;

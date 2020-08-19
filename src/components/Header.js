@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import ContextStore from '../components/reducers/store';
 
 const Header = () => {
-    const { isDelay, dispatch } = React.useContext(ContextStore);
+    const [state, dispatch] = React.useContext(ContextStore);
+    const isDelay = state.isDelay.isDelay;
 
     const buttonClass = () => {
         return isDelay === true ? 'ui button red' : 'ui button green';

@@ -12,8 +12,9 @@ const BreedsPage = () => {
     const [breed, setBreed] = useState('');
     const [breedsList, setBreedsList] = useState({});
     const safeSet = useSafeSet();
-
-    const { isDelay } = useContext(ContextStore);
+    
+    const [state] = useContext(ContextStore);
+    const isDelay = state.isDelay.isDelay;
 
     useEffect(() => {
         async function initialSet() {

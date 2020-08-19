@@ -1,8 +1,8 @@
-export const INITIAL_STATE = {
+const INITIAL_STATE = {
     isDelay: false,
 };
 
-export const isDelayReducer = (state = INITIAL_STATE, action) => {
+const isDelayReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'SWITCH_DELAY':
             return { ...state, isDelay: !state.isDelay}
@@ -10,3 +10,5 @@ export const isDelayReducer = (state = INITIAL_STATE, action) => {
             return state;
     }
 };
+
+export default isDelayReducer;

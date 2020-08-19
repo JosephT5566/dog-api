@@ -9,7 +9,8 @@ const ImageList = ({ breed }) => {
     const [stoppable, setStoppable] = useState(true);
     const ref = useRef(true);
 
-    const { isDelay } = useContext(ContextStore);
+    const [state] = useContext(ContextStore);
+    const isDelay = state.isDelay.isDelay;
 
     useEffect(() => {
         return () => {
