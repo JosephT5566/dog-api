@@ -5,7 +5,7 @@ import ImageList from './ImageList';
 import { breedsRequest } from '../../../apis/axios';
 import delay from '../../assets/delay';
 import useSafeSet from '../../assets/useSafeSet';
-import ContextStore from '../../reducers/store';
+import delayContext from '../../contexts/delayContext';
 
 const BreedsPage = () => {
     const [search, setSearch] = useState('');
@@ -13,11 +13,11 @@ const BreedsPage = () => {
     const [breedsList, setBreedsList] = useState({});
     const safeSet = useSafeSet();
 
-    const { isDelay } = useContext(ContextStore);
+    const { delayState } = useContext(delayContext);
 
     useEffect(() => {
         async function initialSet() {
-            if (isDelay) await delay(3000);
+            if (delayState) await delay(3000);
             const response = await breedsRequest.get('/list/all');
             safeSet(() => {
                 setBreedsList(response.data.message);
@@ -31,7 +31,7 @@ const BreedsPage = () => {
             setBreedsList({});
             setBreed('');
         };
-    }, [isDelay, safeSet]);
+    }, [delayState, safeSet]);
 
     return (
         <div className="ui equal height grid" style={{ height: 'inherit' }}>

@@ -2,14 +2,14 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import Gallery from 'react-grid-gallery';
 
 import delay from '../../assets/delay';
-import ContextStore from '../../reducers/store';
+import delayContext from '../../contexts/delayContext';
 
 const ImageList = ({ breed }) => {
     const [imageSet, setImageSet] = useState([]);
     const [stoppable, setStoppable] = useState(true);
     const ref = useRef(true);
 
-    const { isDelay } = useContext(ContextStore);
+    const { delayState } = useContext(delayContext);
 
     useEffect(() => {
         return () => {
@@ -21,7 +21,7 @@ const ImageList = ({ breed }) => {
     useEffect(() => {
         let url = '';
         const fetchImages = async (url) => {
-            if (isDelay) await delay(3000);
+            if (delayState) await delay(3000);
 
             try {
                 let { message: images } = await (await fetch(url, {})).json();
@@ -47,7 +47,7 @@ const ImageList = ({ breed }) => {
         }
 
         fetchImages(url);
-    }, [breed, isDelay]);
+    }, [breed, delayState]);
 
     const getImageMetaAndSet = (imageUrl) => {
         let img = new Image();

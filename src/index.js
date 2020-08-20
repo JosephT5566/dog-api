@@ -2,20 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './components/App';
-import { INITIAL_STATE, isDelayReducer } from './components/reducers/isDelay';
-import ContextStore from './components/reducers/store';
+import delayContext, {
+    INITIAL_DELAY_STATE,
+} from './components/contexts/delayContext';
+
+const DelayProvider = delayContext.Provider;
 
 const DogApi = () => {
-    const [isDelayState, dispatch] = React.useReducer(isDelayReducer, INITIAL_STATE);
+    const [delayState, setDelayState] = React.useState(INITIAL_DELAY_STATE);
     return (
-        <ContextStore.Provider
-            value={{
-                isDelay: isDelayState.isDelay,
-                dispatch: dispatch,
-            }}
-        >
+        <DelayProvider value={{ delayState, setDelayState }}>
             <App />
-        </ContextStore.Provider>
+        </DelayProvider>
     );
 };
 

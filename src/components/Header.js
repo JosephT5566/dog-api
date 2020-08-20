@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ContextStore from '../components/reducers/store';
+import delayContext from '../components/contexts/delayContext';
 
 const Header = () => {
-    const { isDelay, dispatch } = React.useContext(ContextStore);
+    const { delayState, setDelayState } = React.useContext(delayContext);
 
     const buttonClass = () => {
-        return isDelay === true ? 'ui button red' : 'ui button green';
+        return delayState === true ? 'ui button red' : 'ui button green';
     };
 
     const buttonContext = () => {
-        return isDelay === true ? 'Normal' : 'Delay';
+        return delayState === true ? 'Normal' : 'Delay';
     };
 
     return (
@@ -21,7 +21,7 @@ const Header = () => {
             <button
                 className={buttonClass()}
                 onClick={() => {
-                    dispatch({ type: 'SWITCH_DELAY' });
+                    setDelayState(!delayState);
                 }}
             >
                 {buttonContext()}
