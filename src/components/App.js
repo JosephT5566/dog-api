@@ -14,9 +14,9 @@ const App = () => {
                         <Header />
                     </div>
                     <div className="content" style={{ height: '90vh' }}>
-                        <Redirect path="/dog-api" to="/list"/>
-                        <Route path="/list" exact component={BreedsPage} />
-                        <Route path="/random" exact component={RandomPage} />
+                        <Redirect path="/dog-api" to="/dog-api/list"/>
+                        <Route path="/dog-api/list" exact component={BreedsPage} />
+                        <Route path="/dog-api/random" exact component={RandomPage} />
                     </div>
                 </div>
             </BrowserRouter>
