@@ -1,37 +1,63 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
-import useSafeSet from '../../assets/useSafeSet';
-import delay from '../../assets/delay'
+import delay from '../../assets/delay';
 import delayContext from '../../contexts/delayContext';
 
 const RandomPage = () => {
     const [imageUrl, setImageUrl] = useState('');
+    const [status, setStatus] = useState('idle'); // idle, ready, loading
+
     const { delayState } = useContext(delayContext);
-    const safeSet = useSafeSet();
     const randomUrl = 'https://dog.ceo/api/breeds/image/random';
 
     useEffect(() => {
-        fetch(randomUrl, {})
-            .then((response) => response.json())
-            .then((result) => {
-                safeSet(() => setImageUrl(result.message));
-            })
-            .catch((err) => alert(err));
-    }, [safeSet]);
+        const initGetImage = async () => {
+            if (status !== 'idle') return;
+            try {
+                setStatus('loading');
+                if (delayState) await delay(3000);
+                const response = await fetch(randomUrl);
+                const { message: image } = await response.json();
+                setImageUrl(image);
+                setStatus('ready');
+            } catch (error) {
+                alert(error);
+            }
+        };
 
-    const getImage = async () => {
+        initGetImage();
+    }, []);
+
+    const onGetImage = async () => {
+        if (status === 'loading') {
+            // console.log('is loading');
+            return;
+        }
+        setImageUrl('');
         try {
-            safeSet(() => setImageUrl(''));
+            setStatus('loading');
             if (delayState) await delay(3000);
-            const { message: image } = await (
-                await fetch(randomUrl, {})
-            ).json();
-            safeSet(() => setImageUrl(image));
+            const response = await fetch(randomUrl);
+            const { message: image } = await response.json();
+            setImageUrl(image);
+            setStatus('ready');
         } catch (err) {
             alert(err);
         }
     };
 
+    return (
+        <div>
+            <h1 className="ui header">Get Random Image</h1>
+            <button className="ui orange button" onClick={onGetImage}>
+                Get Image
+            </button>
+            <ImageCard imageUrl={imageUrl} />
+        </div>
+    );
+};
+
+const ImageCard = ({ imageUrl }) => {
     const renderPlaceholder = () => {
         return (
             <div className="ui placeholder" style={{ margin: '0 auto' }}>
@@ -41,47 +67,18 @@ const RandomPage = () => {
     };
 
     const renderImage = () => {
-        return imageUrl === '' ? (
-            renderPlaceholder()
-        ) : (
-            <RandomImage imageUrl={imageUrl} />
+        return (
+            <div>
+                <img
+                    className="ui medium centered rounded image"
+                    src={imageUrl}
+                    alt={imageUrl}
+                />
+            </div>
         );
     };
 
-    return (
-        <div>
-            <h1 className="ui header">Get Random Image</h1>
-            <button className="ui orange button" onClick={getImage}>
-                Get Image
-            </button>
-            {renderImage()}
-        </div>
-    );
-};
-
-const RandomImage = ({ imageUrl }) => {
-    const [url, setUrl] = useState(null);
-    const ref = useRef(true);
-
-    useEffect(() => {
-        if (ref.current) {
-            setUrl(imageUrl);
-        }
-        return () => {
-            // did update
-            ref.current = false;
-        };
-    }, [imageUrl]);
-
-    return (
-        <div>
-            <img
-                className="ui medium centered rounded image"
-                src={url}
-                alt={url}
-            />
-        </div>
-    );
+    return imageUrl === '' ? renderPlaceholder() : renderImage();
 };
 
 export default RandomPage;
