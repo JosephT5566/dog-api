@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/dog-api/static/js/main.511fa90a.chunk.js",
-    "main.js.map": "/dog-api/static/js/main.511fa90a.chunk.js.map",
+    "main.js": "/dog-api/static/js/main.08381fea.chunk.js",
+    "main.js.map": "/dog-api/static/js/main.08381fea.chunk.js.map",
     "runtime-main.js": "/dog-api/static/js/runtime-main.9a481e21.js",
     "runtime-main.js.map": "/dog-api/static/js/runtime-main.9a481e21.js.map",
-    "static/js/2.1365f048.chunk.js": "/dog-api/static/js/2.1365f048.chunk.js",
-    "static/js/2.1365f048.chunk.js.map": "/dog-api/static/js/2.1365f048.chunk.js.map",
+    "static/js/2.e067b663.chunk.js": "/dog-api/static/js/2.e067b663.chunk.js",
+    "static/js/2.e067b663.chunk.js.map": "/dog-api/static/js/2.e067b663.chunk.js.map",
     "index.html": "/dog-api/index.html",
-    "precache-manifest.e1bc62a8695d8c4d3eefacf72348c19a.js": "/dog-api/precache-manifest.e1bc62a8695d8c4d3eefacf72348c19a.js",
+    "precache-manifest.76c321d4d2f4f68a8c9422ec11baeef1.js": "/dog-api/precache-manifest.76c321d4d2f4f68a8c9422ec11baeef1.js",
     "service-worker.js": "/dog-api/service-worker.js",
-    "static/js/2.1365f048.chunk.js.LICENSE.txt": "/dog-api/static/js/2.1365f048.chunk.js.LICENSE.txt"
+    "static/js/2.e067b663.chunk.js.LICENSE.txt": "/dog-api/static/js/2.e067b663.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.9a481e21.js",
-    "static/js/2.1365f048.chunk.js",
-    "static/js/main.511fa90a.chunk.js"
+    "static/js/2.e067b663.chunk.js",
+    "static/js/main.08381fea.chunk.js"
   ]
 }
