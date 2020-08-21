@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
 import Header from './Header';
 import BreedsPage from './pages/BreedsPage';
@@ -14,7 +14,8 @@ const App = () => {
                         <Header />
                     </div>
                     <div className="content" style={{ height: '90vh' }}>
-                        <Route path="/" exact component={BreedsPage} />
+                        <Redirect path="/dog-api" to="/list"/>
+                        <Route path="/list" exact component={BreedsPage} />
                         <Route path="/random" exact component={RandomPage} />
                     </div>
                 </div>

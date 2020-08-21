@@ -15,7 +15,7 @@ const Header = () => {
 
     return (
         <div className="ui secondary pointing menu">
-            <Link to="/" className="item">
+            <Link to="/list" className="item">
                 Dog Api
             </Link>
             <button
@@ -27,7 +27,7 @@ const Header = () => {
                 {buttonContext()}
             </button>
             <div className="right menu">
-                <Link to="/" className="item">
+                <Link to="/list" className="item">
                     Breeds list
                 </Link>
                 <Link to="/random" className="item">
