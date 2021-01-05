@@ -9,4 +9,12 @@ jobs:
             - name: Branch name
               run: echo running on branch ${GITHUB_REF##*/}
             - name: github.ref name
-              run: echo github.ref
+              run: echo $github.ref
+    staging:
+        if: contains(github.ref, 'master')
+        name: Staging
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Enter step
+              run: echo Enter step
