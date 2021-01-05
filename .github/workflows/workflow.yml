@@ -8,6 +8,6 @@ jobs:
         steps:
             - name: Branch name
               run: echo running on branch ${GITHUB_REF##*/}
-            - name: Check branch name
-			        if: contains(${GITHUB_REF##*/}, 'test')
-              run: exho 'branch name contains test'
+            # - name: Check branch name
+			      #   if: contains(${GITHUB_REF##*/}, 'test')
+            #   run: exho 'branch name contains test'
