@@ -8,3 +8,5 @@ jobs:
         steps:
             - name: Branch name
               run: echo running on branch ${GITHUB_REF##*/}
+            - name: github.ref name
+              run: echo ${github.ref}
