@@ -13,7 +13,7 @@ jobs:
             - name: source PR name
               run: echo running on branch ${{github.head_ref}}
     staging:
-        if: contains(github.ref, 'test')
+        if: contains(github.head_ref, 'test')
         name: Staging
         runs-on: ubuntu-latest
 
